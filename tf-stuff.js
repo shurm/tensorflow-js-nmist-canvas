@@ -15,35 +15,31 @@
  * =============================================================================
  */
 
-//import * as tf from '@tensorflow/tfjs';
-
-// This is a helper class for loading and managing MNIST data specifically.
-// It is a useful example of how you could create your own data manager class
-// for arbitrary data though. It's worth a look :)
-//import {IMAGE_H, IMAGE_W, MnistData} from './data';
-
-// This is a helper class for drawing loss graphs and MNIST images to the
-// window. For the purposes of understanding the machine learning bits, you can
-// largely ignore it
-
+console.log("testing");
 var modelLocation = document.getElementById("tf-script").getAttribute("model-location");
+var canvasId = document.getElementById("tf-script").getAttribute("canvasId");
+var buttonId = document.getElementById("tf-script").getAttribute("buttonId");
+var canvas = document.getElementById(canvasId);
+var predictionButton = document.getElementById(buttonId);
 
 /**
  * Show predictions on a number of test examples.
  *
  * @param {tf.Model} model The model to be used for making the predictions.
  */
-async function showPredictions(model) {
-  const testExamples = 100;
-  const examples = data.getTestData(testExamples);
-
+async function predict() {
+ 
   // Code wrapped in a tf.tidy() function callback will have their tensors freed
   // from GPU memory after execution without having to call dispose().
   // The tf.tidy callback runs synchronously.
   tf.tidy(() => {
-	  //console.log("predicting");
-	 console.log(examples.xs);
-    const output = model.predict(examples.xs);
+	var imageData = getCanvasImage();
+	let img = tf.tensor2d(imageData);
+	
+	console.log(imageData);
+	//img = img.reshape([1,28,28,1]);
+	//img = tf.cast(img,'float32');
+	const output = model.predict(img);
 // console.log("after predict");
     // tf.argMax() returns the indices of the maximum values in the tensor along
     // a specific axis. Categorical classification tasks like this one often
@@ -58,54 +54,38 @@ async function showPredictions(model) {
     // that we can use them in our normal CPU JavaScript code
     // (for a non-blocking version of this function, use data()).
     const axis = 1;
-    const labels = Array.from(examples.labels.argMax(axis).dataSync());
     const predictions = Array.from(output.argMax(axis).dataSync());
 
-    showTestResults(examples, predictions, labels);
+	
+    showResult(prediction);
   });
 }
 
+function showResult(prediction)
+{
+	
+	playAnimation();
+}
 
 
 let data;
+var model;
 async function load()
- {
-  data = new MnistData1();
-  await data.load();
-  logStatus('done');
+{
+	data = new MnistData1();
+	await data.load();
+	
+	model = await tf.loadModel(modelLocation);
+
+	model.compile({
+	optimizer: 'rmsprop',
+	loss: 'categoricalCrossentropy',
+	metrics: ['accuracy'],
+	});
+	predictionButton.disabled = false;
 }
 
-// This is our main function. It loads the MNIST data, trains the model, and
-// then shows what the model predicted on unseen test data.
 
-  logStatus('Loading MNIST data...');
-  load();
-setTrainButtonCallback(async () => {
-	  await load();
-  logStatus('Creating model...');
-  const model = await tf.loadModel(modelLocation);
-	model.compile({
-		optimizer: 'rmsprop',
-		loss: 'categoricalCrossentropy',
-		metrics: ['accuracy'],
-	  });
-  console.log("hi");
-  //model.summary();
-
-  logStatus('Starting model training...');
-  showPredictions(model);
-  console.log("hi4");
-  
-  const testData = data.getTestData();
-  console.log(data);
-  console.log(data.testLabels);
-  
-  const testResult = model.evaluate(testData.xs, testData.labels);
-  
-  const testAccPercent = testResult[1].dataSync()[0] * 100;
-  
-  logStatus(
-      
-      `Final test accuracy: ${testAccPercent.toFixed(1)}%`);
-	  
-});
+//loads the MNIST data, and loads the "already trained" model
+load();
+ 

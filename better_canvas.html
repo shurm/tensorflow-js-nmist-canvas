@@ -1,269 +1,41 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <style>
-      body {
-        margin: 0px;
-        padding: 0px;
-      }
-	  #paint
-	  {
-		width:300px;
-		height:250px;
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
-	  }
-	  #canvasButtons
-	  {
-		width: 60%;
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
-	  }
-	  #myCanvas
-	  {
-		border:solid;
-	  }
-	  .redButton {
-	-moz-box-shadow:inset 0px 1px 0px 0px #f5978e;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #f5978e;
-	box-shadow:inset 0px 1px 0px 0px #f5978e;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f24537), color-stop(1, #c62d1f));
-	background:-moz-linear-gradient(top, #f24537 5%, #c62d1f 100%);
-	background:-webkit-linear-gradient(top, #f24537 5%, #c62d1f 100%);
-	background:-o-linear-gradient(top, #f24537 5%, #c62d1f 100%);
-	background:-ms-linear-gradient(top, #f24537 5%, #c62d1f 100%);
-	background:linear-gradient(to bottom, #f24537 5%, #c62d1f 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f24537', endColorstr='#c62d1f',GradientType=0);
-	background-color:#f24537;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	border-radius:6px;
-	border:1px solid #d02718;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
-	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #810e05;
-}
-.redButton:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #c62d1f), color-stop(1, #f24537));
-	background:-moz-linear-gradient(top, #c62d1f 5%, #f24537 100%);
-	background:-webkit-linear-gradient(top, #c62d1f 5%, #f24537 100%);
-	background:-o-linear-gradient(top, #c62d1f 5%, #f24537 100%);
-	background:-ms-linear-gradient(top, #c62d1f 5%, #f24537 100%);
-	background:linear-gradient(to bottom, #c62d1f 5%, #f24537 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#c62d1f', endColorstr='#f24537',GradientType=0);
-	background-color:#c62d1f;
-}
-.redButton:active {
-	position:relative;
-	top:1px;
-}
-.orangeButton {
-	-moz-box-shadow:inset 0px 1px 0px 0px #fce2c1;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #fce2c1;
-	box-shadow:inset 0px 1px 0px 0px #fce2c1;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffc477), color-stop(1, #fb9e25));
-	background:-moz-linear-gradient(top, #ffc477 5%, #fb9e25 100%);
-	background:-webkit-linear-gradient(top, #ffc477 5%, #fb9e25 100%);
-	background:-o-linear-gradient(top, #ffc477 5%, #fb9e25 100%);
-	background:-ms-linear-gradient(top, #ffc477 5%, #fb9e25 100%);
-	background:linear-gradient(to bottom, #ffc477 5%, #fb9e25 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffc477', endColorstr='#fb9e25',GradientType=0);
-	background-color:#ffc477;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	border-radius:6px;
-	border:1px solid #eeb44f;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
-	padding:6px 24px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #cc9f52;
-}
-.orangeButton:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #fb9e25), color-stop(1, #ffc477));
-	background:-moz-linear-gradient(top, #fb9e25 5%, #ffc477 100%);
-	background:-webkit-linear-gradient(top, #fb9e25 5%, #ffc477 100%);
-	background:-o-linear-gradient(top, #fb9e25 5%, #ffc477 100%);
-	background:-ms-linear-gradient(top, #fb9e25 5%, #ffc477 100%);
-	background:linear-gradient(to bottom, #fb9e25 5%, #ffc477 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fb9e25', endColorstr='#ffc477',GradientType=0);
-	background-color:#fb9e25;
-}
-.orangeButton:active {
-	position:relative;
-	top:1px;
-}
-.greenButton {
-	-moz-box-shadow:inset 0px 1px 0px 0px #9acc85;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #9acc85;
-	box-shadow:inset 0px 1px 0px 0px #9acc85;
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #74ad5a), color-stop(1, #68a54b));
-	background:-moz-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
-	background:-webkit-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
-	background:-o-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
-	background:-ms-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
-	background:linear-gradient(to bottom, #74ad5a 5%, #68a54b 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#74ad5a', endColorstr='#68a54b',GradientType=0);
-	background-color:#74ad5a;
-	border:1px solid #3b6e22;
-	-moz-border-radius:8px;
-	-webkit-border-radius:8px;
-	border-radius:8px;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Arial;
-	font-size:20px;
-	font-weight:bold;
-	padding:13px 32px;
-	text-decoration:none;
-}
-.greenButton:hover {
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #68a54b), color-stop(1, #74ad5a));
-	background:-moz-linear-gradient(top, #68a54b 5%, #74ad5a 100%);
-	background:-webkit-linear-gradient(top, #68a54b 5%, #74ad5a 100%);
-	background:-o-linear-gradient(top, #68a54b 5%, #74ad5a 100%);
-	background:-ms-linear-gradient(top, #68a54b 5%, #74ad5a 100%);
-	background:linear-gradient(to bottom, #68a54b 5%, #74ad5a 100%);
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#68a54b', endColorstr='#74ad5a',GradientType=0);
-	background-color:#68a54b;
-}
-.greenButton:active {
-	position:relative;
-	top:1px;
-}
-
-    </style>
+  <link rel="stylesheet" type="text/css" href="colorbuttons.css">
+   
   </head>
   <body>
-  	<div id="paint">
-  		<canvas id="myCanvas"></canvas>
-		<div id ="canvasButtons">
+ 
+  	<div >
+		<div > 
+			<canvas id="myCanvas"></canvas>
+			
+			<div class='button-wrapper'>
+				<submit class="greenButton" onclick="playAnimation()">Classify</submit>
+			</div>
+			
+			<div class='button-wrapper'>
+				<div id = "ts-output" >fjfjfjjfjf</div>
+			</div>
+		</div> 
+		<div >
 			 <submit class="redButton" onclick="clearCanvas()">Clear</submit>
 			 <submit class="orangeButton" onclick="undo()">Undo</submit>
-			 <submit class="greenButton" >Classify</submit>
-		<div>
+		</div>
 	</div>
-    <script>
-var canvas = document.getElementById('myCanvas');
-var ctx = canvas.getContext('2d');
- 
-var painting = document.getElementById('paint');
-var paint_style = getComputedStyle(painting);
-canvas.width = parseInt(paint_style.getPropertyValue('width'));
-canvas.height = parseInt(paint_style.getPropertyValue('height'));
-
-var mouse = {x: 0, y: 0};
- 
-canvas.addEventListener('mousemove', function(e) {
-  mouse.x = e.pageX - this.offsetLeft;
-  mouse.y = e.pageY - this.offsetTop;
-}, false);
-
-canvas.addEventListener('touchmove', function(e) {
-  mouse.x = e.pageX - this.offsetLeft;
-  mouse.y = e.pageY - this.offsetTop;
-}, false);
-
-ctx.lineWidth = 9;
-ctx.lineJoin = 'round';
-ctx.lineCap = 'round';
-ctx.strokeStyle = '#00CC99';
- 
-canvas.addEventListener('mousedown', function(e) {
-	mouseDown=1;
-    ctx.beginPath();
-    ctx.moveTo(mouse.x, mouse.y);
- 
-    canvas.addEventListener('mousemove', onPaint, false);
-}, false);
- 
-window.addEventListener('mouseup', function() {
-	if(mouseDown!=1)
-		return;
-		
-	cPush();
-	
-	mouseDown=0;
-    canvas.removeEventListener('mousemove', onPaint, false);
-}, false);
-
-canvas.addEventListener('touchstart', function(e) {
-	mouseDown=1;
-    ctx.beginPath();
-    ctx.moveTo(mouse.x, mouse.y);
- 
-    canvas.addEventListener('touchmove', onPaint, false);
-}, false);
- 
-window.addEventListener('touchend', function() {
-	if(mouseDown!=1)
-		return;
-	
-	cPush();
-		
-	mouseDown=0;
-    canvas.removeEventListener('touchmove', onPaint, false);
-}, false);
- 
-	var onPaint = function() {
-		ctx.lineTo(mouse.x, mouse.y);
-		ctx.stroke();
-	};
-	var cPushArray = new Array();
-	var cStep = -1;
-	
-	function cPush() 
+    <script src="paint.js"></script>
+	<script>
+	var output = document.getElementById('ts-output');
+	function playAnimation()
 	{
-		console.log("ffff");
-    	cStep++;
-		if (cStep < cPushArray.length) 
+		output.classList.remove('lightSpeedIn');
+		setTimeout(function() 
 		{
-			cPushArray.length = cStep; 
-		}
-		cPushArray.push(canvas.toDataURL());
+			output.classList.add('lightSpeedIn');
+		}, 10);
+		
 	}
 	
-	function undo()
-	{
-	//alert("cStep: "+cStep);
-		if (cStep > 0)
-		{
-			console.log("before: "+cStep);
-			cStep--;
-			console.log("after: "+cStep);
-			var canvasPic = new Image();
-			canvasPic.src = cPushArray[cStep];
-			canvasPic.onload = function () 
-			{ 
-				ctx.clearRect(0, 0, canvas.width, canvas.height);
-				ctx.drawImage(canvasPic, 0, 0); 
-				console.log("yo yo");
-				console.log(cStep);
-			}
-			
-			
-		}
-	}
-	
-	function clearCanvas() 
-	{
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-		cPushArray = new Array();
-		cStep = -1;
-    }
-    </script>
+	</script>
   </body>
 </html>            

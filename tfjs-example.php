@@ -33,7 +33,7 @@ include 'assets/templates/header.php';
 		 <submit class="button redButton" onclick="clearCanvas()">Clear</submit>
 		 <submit  class="button orangeButton" onclick="undo()">Undo</submit>
 		 
-		 <submit id ="classify" class="button greenButton" style="font-size: 14px;padding:10px 1px;margin-top:190px;" onclick="gg()">Classify</submit>
+		 <submit id ="classify" class="button greenButton" style="font-size: 14px;padding:10px 1px;margin-top:190px;" onclick="startPredictionProcess()">Classify</submit>
          
       </div> 
 	<canvas  id="myCanvas" style="border: solid;" width="280" height="280" ></canvas>
@@ -41,7 +41,7 @@ include 'assets/templates/header.php';
 
    <div class="animcontainer">
 		<div class="animate">
-			<span>You drew an: </span>
+			<span>You drew: </span>
 			<span class = "twister" id="ts-output" style ="visibility: hidden;">8</span>
      
       
@@ -60,19 +60,7 @@ include 'assets/templates/header.php';
 
 <script src = "tfjs_files/paint.js"></script>
 <script>
-	var output = document.getElementById('ts-output');
-
-	function playAnimation(prediction)
-	{
-		output.innerHTML = ""+prediction;
-		output.style.visibility = "visible";
-		output.classList.remove('twister');
-		setTimeout(function() 
-		{
-			output.classList.add('twister');
-		}, 10);
-		
-	}
+	
 	function resizePixels( oldPixels, newDim  )
 	{
 		var threshold = 0.5;
@@ -96,13 +84,12 @@ include 'assets/templates/header.php';
 					{
 						
 						if(oldPixels[gridY][gridX] > 0)
-							blackPixels++;
+							blackPixels+=oldPixels[gridY][gridX];
 					}
 				}
 				var blackRatio = blackPixels/(ratio*ratio);
 				
-				if(blackRatio>=threshold)
-					shrunkPixels[y1][x1] = blackRatio;
+				shrunkPixels[y1][x1] = blackRatio;
 				
 				x1++;
 			}
@@ -141,7 +128,7 @@ include 'assets/templates/header.php';
 
 		var newDim = pixels.length;
 		var newImgData = ctx.createImageData(newDim, newDim);
-		console.log(newImgData.width);
+		//console.log(newImgData.width);
 		for(y = 0; y < newImgData.width; y++)
 		{
 			for(x = 0; x < newImgData.height; x++)
@@ -155,23 +142,40 @@ include 'assets/templates/header.php';
 		
 		destCanvasContext.putImageData(newImgData, 0, 0);
 	}
-	function gg()
+	
+	var output = document.getElementById('ts-output');
+
+	function playAnimation(prediction)
+	{
+		output.innerHTML = ""+prediction;
+		output.style.visibility = "visible";
+		output.classList.remove('twister');
+		setTimeout(function() 
+		{
+			output.classList.add('twister');
+		}, 10);
+		
+	}
+	
+	function startPredictionProcess()
 	{
 		var sourceCanvas = document.getElementById("myCanvas");
-		var destCanvas = document.getElementById("copyOf");
 		
 		var originalPixelMatrix = canvasToPixelMatrix(sourceCanvas);
 		
-		 
+		 //dimension of nmist data
 		var newDim = 28;
 		
 
 		var newShrunkPixels = resizePixels( originalPixelMatrix, newDim);
 		
-		console.log(newShrunkPixels);
-		
+		//console.log(newShrunkPixels);
+		var destCanvas = document.getElementById("copyOf");
 		plotPixelsToCanvas(destCanvas, newShrunkPixels);
-		console.log("done!!");
+		
+		predict(newShrunkPixels);
+		
+		//console.log("done!!");
 	}
 	
 </script>

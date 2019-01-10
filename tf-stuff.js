@@ -15,11 +15,9 @@
  * =============================================================================
  */
 
-console.log("testing");
+
 var modelLocation = document.getElementById("tf-script").getAttribute("model-location");
-var canvasId = document.getElementById("tf-script").getAttribute("canvasId");
 var buttonId = document.getElementById("tf-script").getAttribute("buttonId");
-var canvas = document.getElementById(canvasId);
 var predictionButton = document.getElementById(buttonId);
 
 /**
@@ -27,18 +25,16 @@ var predictionButton = document.getElementById(buttonId);
  *
  * @param {tf.Model} model The model to be used for making the predictions.
  */
-async function predict() {
+async function predict(pixels) {
  
   // Code wrapped in a tf.tidy() function callback will have their tensors freed
   // from GPU memory after execution without having to call dispose().
   // The tf.tidy callback runs synchronously.
   tf.tidy(() => {
-	var imageData = getCanvasImage();
-	let img = tf.tensor2d(imageData);
 	
-	console.log(imageData);
-	//img = img.reshape([1,28,28,1]);
-	//img = tf.cast(img,'float32');
+	let img = tf.tensor3d([pixels]);
+	
+	img = tf.cast(img,'float32');
 	const output = model.predict(img);
 // console.log("after predict");
     // tf.argMax() returns the indices of the maximum values in the tensor along
@@ -54,17 +50,21 @@ async function predict() {
     // that we can use them in our normal CPU JavaScript code
     // (for a non-blocking version of this function, use data()).
     const axis = 1;
-    const predictions = Array.from(output.argMax(axis).dataSync());
-
 	
-    showResult(prediction);
+	console.log("output is:");
+	output.print();
+	
+    const prediction = Array.from(output.argMax(axis).dataSync());
+
+	//console.log(prediction[0]);
+    showResult(prediction[0]);
   });
 }
 
 function showResult(prediction)
 {
 	
-	playAnimation();
+	playAnimation(prediction);
 }
 
 

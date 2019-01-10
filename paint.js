@@ -102,51 +102,8 @@ function clearCanvas()
 	cPush();
 }
 
-function getCanvasImage() 
+function matrix( rows, cols, defaultValue)
 {
-	var fff =  cPushArray[cPushArray.length-1];
-	var canvasPic = new Image();
-	canvasPic.src = fff;
-		
-		
-	
-	var canvas1 = document.createElement('canvas');
-	var context = canvas.getContext('2d');
-	
-	var imgPixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
-	var imgData = matrix(canvas.width, canvas.height,0);
-	var tt = 0;
-	for(var y = 0; y < imgPixels.width; y++)
-	{
-		for(var x = 0; x < imgPixels.height; x++)
-		{
-		  var i = (y * 4) * imgPixels.width + x * 4;
-		  var sum = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]);
-		  if(sum!=0)
-		  {
-			  tt=1;
-			  console.log(sum);
-			  console.log("o oo ALL zeros");
-		  }
-		  
-		  var avg =  sum/ 3.0;
-		  imgData[y][x]=avg;
-		  
-		}
-		
-	}
-
-	if(tt==0)
-	{
-		console.log("ALL zeros");
-	}
-	else
-		console.log("good!");
-	
-	console.log(imgData[0][0]);
-	return imgData;
-}
-function matrix( rows, cols, defaultValue){
 
   var arr = [];
 

@@ -7,7 +7,7 @@ var mouse = {x: 0, y: 0};
 var mouseDown = 0;
 var onPaint = function(e) 
 {
-	 e.preventDefault();
+	e.preventDefault();
 	ctx.lineTo(mouse.x, mouse.y);
 	ctx.stroke();
 };
@@ -21,7 +21,7 @@ canvas.addEventListener('mousemove', function(e) {
 }, false);
 
 canvas.addEventListener('touchmove', function(e) {
-	 e.preventDefault();
+  e.preventDefault();
   mouse.x = e.pageX - this.offsetLeft;
   mouse.y = e.pageY - this.offsetTop;
 }, false);
@@ -32,7 +32,7 @@ ctx.lineCap = 'round';
 ctx.strokeStyle = "#000";
  
 canvas.addEventListener('mousedown', function(e) {
-	 e.preventDefault();
+	e.preventDefault();
 	mouseDown=1;
     ctx.beginPath();
     ctx.moveTo(mouse.x, mouse.y);
@@ -53,7 +53,7 @@ window.addEventListener('mouseup', function() {
 }, false);
 
 canvas.addEventListener('touchstart', function(e) {
-	 e.preventDefault();
+	e.preventDefault();
 	mouseDown=1;
     ctx.beginPath();
     ctx.moveTo(mouse.x, mouse.y);
@@ -109,6 +109,14 @@ function clearCanvas()
 	cPush();
 }
 
+
+function emptyCanvas()
+{
+	if (cStep > 0)
+		return false;
+	return true;
+}
+
 function matrix( rows, cols, defaultValue)
 {
 
@@ -130,11 +138,5 @@ function matrix( rows, cols, defaultValue)
   }
 
 	return arr;
-}
-function emptyCanvas()
-{
-	if (cStep > 0)
-		return false;
-	return true;
 }
 clearCanvas();

@@ -78,10 +78,11 @@ async function load()
 // This is our main function. It loads the MNIST data, trains the model, and
 // then shows what the model predicted on unseen test data.
 
-  logStatus('Loading MNIST data...');
-  load();
+
+ 
 setTrainButtonCallback(async () => {
 	  await load();
+	    logStatus('Loading MNIST data...');
   logStatus('Creating model...');
   const model = await tf.loadModel(modelLocation);
 	model.compile({

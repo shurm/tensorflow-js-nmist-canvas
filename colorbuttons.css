@@ -115,6 +115,17 @@
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#68a54b', endColorstr='#74ad5a',GradientType=0);
 	background-color:#68a54b;
 }
+.greenButton:disabled {
+	
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #8EA783), color-stop(1, #95AD8A));
+	background:-moz-linear-gradient(top, #8EA783 5%, #95AD8A 100%);
+	background:-webkit-linear-gradient(top, #8EA783 5%, #95AD8A 100%);
+	background:-o-linear-gradient(top, #8EA783 5%, #95AD8A 100%);
+	background:-ms-linear-gradient(top, #8EA783 5%, #95AD8A 100%);
+	background:linear-gradient(to bottom, #8EA783 5%, #95AD8A 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#8EA783', endColorstr='#95AD8A',GradientType=0);
+	background-color:#8EA783;
+}
 .greenButton:active {
 	position:relative;
 	top:1px;

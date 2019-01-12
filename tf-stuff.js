@@ -32,8 +32,17 @@ async function predict(pixels) {
   // The tf.tidy callback runs synchronously.
   tf.tidy(() => {
 	
-	let img = tf.tensor3d([pixels]);
-	
+	var y;
+	var x;
+	for(y = 0; y < pixels.length; y++)
+	{
+		for(x = 0; x < pixels.length; x++)
+		{
+			pixels[y][x] = [pixels[y][x]];	
+		}
+	}
+	let img = tf.tensor4d([pixels]);
+	console.log("tf shape is "+img.shape);
 	img = tf.cast(img,'float32');
 	const output = model.predict(img);
 // console.log("after predict");
@@ -82,6 +91,7 @@ async function load()
 	loss: 'categoricalCrossentropy',
 	metrics: ['accuracy'],
 	});
+	
 	predictionButton.disabled = false;
 }
 

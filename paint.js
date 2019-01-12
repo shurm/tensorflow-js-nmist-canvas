@@ -5,13 +5,15 @@ var ctx = canvas.getContext('2d');
 var mouse = {x: 0, y: 0};
 
 var mouseDown = 0;
-var onPaint = function() 
+var onPaint = function(e) 
 {
+	 e.preventDefault();
 	ctx.lineTo(mouse.x, mouse.y);
 	ctx.stroke();
 };
 
 canvas.addEventListener('mousemove', function(e) {
+	 e.preventDefault();
 	
   mouse.x = e.pageX - this.offsetLeft;
   mouse.y = e.pageY - this.offsetTop;
@@ -19,6 +21,7 @@ canvas.addEventListener('mousemove', function(e) {
 }, false);
 
 canvas.addEventListener('touchmove', function(e) {
+	 e.preventDefault();
   mouse.x = e.pageX - this.offsetLeft;
   mouse.y = e.pageY - this.offsetTop;
 }, false);
@@ -29,6 +32,7 @@ ctx.lineCap = 'round';
 ctx.strokeStyle = "#000";
  
 canvas.addEventListener('mousedown', function(e) {
+	 e.preventDefault();
 	mouseDown=1;
     ctx.beginPath();
     ctx.moveTo(mouse.x, mouse.y);
@@ -37,9 +41,11 @@ canvas.addEventListener('mousedown', function(e) {
 }, false);
  
 window.addEventListener('mouseup', function() {
+	
 	if(mouseDown!=1)
 		return;
-		
+	
+
 	cPush();
 	
 	mouseDown=0;
@@ -47,17 +53,18 @@ window.addEventListener('mouseup', function() {
 }, false);
 
 canvas.addEventListener('touchstart', function(e) {
+	 e.preventDefault();
 	mouseDown=1;
     ctx.beginPath();
     ctx.moveTo(mouse.x, mouse.y);
- 
+ //e.preventDefault();
     canvas.addEventListener('touchmove', onPaint, false);
 }, false);
  
 window.addEventListener('touchend', function() {
 	if(mouseDown!=1)
 		return;
-	
+	 
 	cPush();
 		
 	mouseDown=0;
@@ -122,7 +129,12 @@ function matrix( rows, cols, defaultValue)
       }
   }
 
-return arr;
+	return arr;
 }
-
+function emptyCanvas()
+{
+	if (cStep > 0)
+		return false;
+	return true;
+}
 clearCanvas();
